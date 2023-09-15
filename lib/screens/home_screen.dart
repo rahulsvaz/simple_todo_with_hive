@@ -23,7 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => const AddToDo()));
                   },
-                  child: const Text('Add Todo'))
+                  child: const Text('Add Todo')),
+                   ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const AddToDo()));
+                  },
+                  child: const Text('Delete todo'))
             ]),
       ),
     );
