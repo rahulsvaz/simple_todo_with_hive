@@ -15,23 +15,46 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AddToDo()));
-                  },
-                  child: const Text('Add Todo')),
-            ]),
-      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        
+        children: [
+        
+        ValueListenableBuilder(
+            valueListenable: todoBox.listenable(),
+            builder: (context, Box box, widget) {
+              if (box.isEmpty) {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(30.0),
+                    child: Text('No Todo Available '),
+                  ),
+                );
+              } else {
+                return Expanded(
+                  child: ListView.builder(
+                      itemCount: box.length,
+                      itemBuilder: (context, index) {
+                        TodoModel todo = box.getAt(index);
+                        return Container(height: 50,
+                        padding: const EdgeInsets.all(10),
+                          child: ListTile(
+                            title: Center(child: Text(todo.tittle!)),
+                          ),
+                        );
+                      }),
+                );
+              }
+            }),
+        Container(padding: const EdgeInsets.only(bottom: 30),
+          child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const AddToDo()));
+              },
+              child: const Text('Add Todo')),
+        ),
+      ]),
     );
   }
 }
